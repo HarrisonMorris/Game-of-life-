@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class GameFoundations
 {
     
-    gibraltar
+    
     Scanner input = new Scanner (System.in);
     // This scanner will allow me to take in the users input from the keyboard 
     boolean gameMode = false; 
@@ -19,14 +19,14 @@ public class GameFoundations
     public GameFoundations()
     {
         int[][] grid = new int[10][10]; 
-        int x = 1;
+        int z = 1;
         Scanner ban = new Scanner(System.in);
         
 
         for (int j = 0; j < 10; j++){
             for (int i = 0; i < 10; i ++){
-                grid [j][i] = x;
-                x = x + 1; 
+                grid [j][i] = z;
+                z = z + 1; 
             }
         }
         switch(ban.nextLine()){
@@ -67,27 +67,29 @@ public class GameFoundations
                 }
                 
                 case"surrounding":
-                for (int j = 0; j < 10; j++){
-                    for (int i = 0; i < 10; i ++){
+                for (int y = 0; y < 10; y++){
+                    for (int x = 0; x < 10; x ++){
                         int total = 0;
                         int sum = 0;
-                        System.out.print (grid [j][i] + ", ");
                         for (int a = -1; a < 2; a ++){
                             for (int b = -1; b < 2; b ++){
-                                 total = grid [j + a][i + b] ; 
+                                 if (x + b > -1 && y + a > -1 && x + b <= 9 && y + a <= 9 && (b != 0 || a != 0) ){
+                                
+                                total = grid [y + a][x + b] ; 
                                  sum = sum + total; 
-                                 
+                                }
 
                                  
                         
                             }
                         }
-                        System.out.println (sum); 
+                        System.out.print (sum + ", "); 
                     }
+                    System.out.println (" ");
                 }
-                System.out.println ();
+                break;
         }
-        break;
+        
     }
 
     /**
