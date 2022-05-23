@@ -21,7 +21,7 @@ public class GameFoundations
         int z = 0;
         Scanner keyinput = new Scanner(System.in);
         boolean gameModePick=false;
-        String modeChoice;
+        String modeChoice; 
         System.out.println("Good day to you sir/madam I'm here as your humble guide to this simple game also known as connways game of life. now to let us begin please do the following \n"
             +"please type what board you would like to see \n"
             +"board 1 type b1 \n"
@@ -33,13 +33,13 @@ public class GameFoundations
 
         
         switch (keyinput.nextLine()){
-            case "b1":
+            case "b1":// this makes a square full of 1s
             for (int y = 0; y < 10; y++){
                 for (int x = 0; x < 10; x ++){
 
                     for (int a = -1; a < 2; a ++){
                         for (int b = -1; b < 2; b ++){
-                            if (x + b > -1 && y + a > -1 && x + b <= 8 && y + a <= 8 && (b != 0 || a != 0) ){
+                            if (x + b > -1 && y + a > -1 && x + b <= 10 && y + a <= 10 && (b != 0 || a != 0) ){
 
                                 grid [y][x] = 1;
                             } else {
@@ -54,7 +54,7 @@ public class GameFoundations
                 System.out.println (" ");
             }
             break;
-            case "b2":
+            case "b2": //this makes a sqaure of 1s witha border of 0s
             for (int y = 0; y < 10; y++){
                 for (int x = 0; x < 10; x ++){
 
@@ -72,6 +72,10 @@ public class GameFoundations
             }
             break;
             case "b3":
+            int gss = 10; //grid shape size
+            //for (i=0,i<gss,i++){\
+            //grid[i][i]=1
+            //grid[i][gss-1-i]}
             break;
         }
 
