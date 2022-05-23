@@ -17,6 +17,7 @@ public class GameFoundations
     public GameFoundations()
     {
         int[][] grid = new int[10][10]; 
+
         int z = 0;
         Scanner keyinput = new Scanner(System.in);
         boolean gameModePick=false;
@@ -26,25 +27,21 @@ public class GameFoundations
             +"board 1 type b1 \n"
             +"board 2 type b2 \n"
             +"board 3 type b3 \n");
-        for (int j = 0; j < 10; j++){
-            for (int i = 0; i < 10; i ++){
-                grid [j][i] = z;
 
-            }
-        }
 
+    
+
+        
         switch (keyinput.nextLine()){
             case "b1":
             for (int y = 0; y < 10; y++){
                 for (int x = 0; x < 10; x ++){
-                    
+
                     for (int a = -1; a < 2; a ++){
                         for (int b = -1; b < 2; b ++){
                             if (x + b > -1 && y + a > -1 && x + b <= 8 && y + a <= 8 && (b != 0 || a != 0) ){
 
-                                
                                 grid [y][x] = 1;
-
                             } else {
                                 grid [y][x] = 0;
 
@@ -60,17 +57,13 @@ public class GameFoundations
             case "b2":
             for (int y = 0; y < 10; y++){
                 for (int x = 0; x < 10; x ++){
-                    
-                    
+
                     for (int a = -1; a < 2; a ++){
                         for (int b = -1; b < 2; b ++){
                             if (x + b > 1 && y + a > 1 && x + b <= 7 && y + a <= 7 && (b != 0 || a != 0) ){
 
-                                
                                 grid [y][x] = 1;
-
                             } 
-
                         }
                     }
                     System.out.print (grid [y][x] + ", "); 
@@ -81,7 +74,6 @@ public class GameFoundations
             case "b3":
             break;
         }
-
 
 
         // while(!gameModePick){
