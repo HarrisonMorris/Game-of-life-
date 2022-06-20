@@ -23,26 +23,29 @@ public class GameFoundations
         System.out.println("Good day to you sir/madam I'm here as your humble guide to this simple game also known as connways game of life. now to let us begin please do the following \n"
             +"please type run\n");
         int row = 10;
-        int col = 12; 
-
+        int col = 12;
         boolean [][] grid = new boolean[row][col];
-        int [][] newGenInt = new int[grid.length][grid[0].length]; 
-        //grid.length and grid[0].length are the row and col variables of the grid array
         for (int y = 0; y < grid[0].length; y++){
             for (int x = 0; x < grid.length; x++){
                 grid [x][y] = false;  
 
             }
         }
-        grid[grid.length -1][grid[0].length-1] = true;
-        printArray(grid);
+        grid [row-1][col-1] = true;
+        grid [row-2][col-2] = true;
+        grid [row-1][col-2] = true;
+        //grid.length and grid[0].length are the row and col variables of the grid array
+
         boolean gameRun = true;
         int trueCellNeighbours; 
+        printArray(grid);
 
         Scanner UI = new Scanner(System.in);
         while (gameRun == true){
+
             switch (UI.nextLine()){
                 case "run":
+
                 System.out.println("Please type run to advance one generation");
                 boolean [][] newGen = new boolean[grid.length][grid[0].length]; 
 
@@ -59,10 +62,24 @@ public class GameFoundations
                                     newGen[x][y] = true;
                                     trueCellNeighbours++;
                                 }
+                                if (trueCellNeighbours > 3){
+                                    newGen[x][y] = false;
+                                }else if (trueCellNeighbours  < 2){
+                                    newGen[x][y] = false;
+                                }else if (trueCellNeighbours == 2 && newGen[x][y] == true){
+                                    newGen[x][y] = true;
+
+                                }else if(trueCellNeighbours == 3){
+                                    newGen[x][y] = true; 
+
+                                }else{
+                                    newGen[x][y] = false;
+
+                                }
 
                             }
                         if(newGen [x][y] == true){
-                             trueCellNeighbours = trueCellNeighbours -1;
+                            trueCellNeighbours = trueCellNeighbours -1;
 
                         }   
 
