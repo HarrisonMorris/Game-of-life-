@@ -8,7 +8,7 @@ import java.util.Scanner;
 import java.util.Random;
 import java.io.File;
 import java.io.IOException;
-public class GameFoundations
+public class generations
 {
 
     Scanner input = new Scanner (System.in);
@@ -17,7 +17,7 @@ public class GameFoundations
     /**
      * Constructor for objects of class GameFoundations
      */
-    public GameFoundations()
+    public generations()
     {
 
         System.out.println("Good day to you sir/madam I'm here as your humble guide to this simple game also known as connways game of life. now to let us begin please do the following \n"
@@ -52,21 +52,25 @@ public class GameFoundations
                 for (int y = 0; y < grid[0].length; y++){
                     for (int x = 0; x < grid.length; x++){
                         //the y and x loops are for the cell to detect the surrounding cells y for the up and down and x for the side to side
-                        newGen[x][y] = false;
                         trueCellNeighbours = 0;
-                        for (int a = -1; a < 2; a ++)
+                        for (int a = -1; a < 2; a ++){
                             for (int b = -1; b < 2; b ++){
 
                                 if ( (y + b > -1 && x + a > -1 && y + b <= grid[0].length - 1 && x + a <= grid.length - 1 && (b != 0 || a != 0) )&&
                                 (grid [x+a][y+b] == true) ) {
-                                    newGen[x][y] = true;
+                                    
                                     trueCellNeighbours++;
                                 }
-                                if (trueCellNeighbours > 3){
+                                
+
+                            }
+                            
+                        }
+                        if (trueCellNeighbours > 3){
                                     newGen[x][y] = false;
                                 }else if (trueCellNeighbours  < 2){
                                     newGen[x][y] = false;
-                                }else if (trueCellNeighbours == 2 && newGen[x][y] == true){
+                                }else if (trueCellNeighbours == 2 && grid[x][y] == true){
                                     newGen[x][y] = true;
 
                                 }else if(trueCellNeighbours == 3){
@@ -76,12 +80,7 @@ public class GameFoundations
                                     newGen[x][y] = false;
 
                                 }
-
-                            }
-                        if(newGen [x][y] == true){
-                            trueCellNeighbours = trueCellNeighbours -1;
-
-                        }   
+                         
 
                     }
 
