@@ -26,8 +26,9 @@ public class GameOfLife
         boolean [][] oldGen = new boolean[row][col]; //this is the grid that is first displayed on the screen but after that it is the previous version of each new grid
         System.out.println("If you want your starting board to be filled with random cells please type random.");
         System.out.println("If you want your starting board to be filled with dead cells so you can create your own board please type blank");
+
         //these two loops fill the grid array. the first one fills the array with to make ll of them false/dead cels this gives a blank slate for the secound loop to fill the array in a random order with true/alive cells    
-        switch (UI.nextLine()){
+        switch (UI.nextLine().toLowerCase()){
             case "random":
                 for (int printCol = 0; printCol < oldGen[0].length; printCol++){  //grid.length and grid[0].length are the row and col variables of the grid array
                     for (int printRow = 0; printRow < oldGen.length; printRow++){
@@ -54,17 +55,17 @@ public class GameOfLife
         printArray(oldGen);
         System.out.println("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"changeCell\" to change the state of a certain cell\n ");
         while (gameRun == true){
-            switch (UI.nextLine()){//UI stand for user input
+            switch (UI.nextLine().toLowerCase()){//UI stand for user input
                 case "run":
                     System.out.println("type \"run\" to advance one generation");
                     oldGen = makeNewGen(oldGen); // this makes a new generation by getting the old one and putting it through the rules of the game to make a grid.
                     printArray(oldGen);     
-                    System.out.println("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"changeCell\" to change the state of a certain cell\n ");
+                    System.out.println("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"change cell\" to change the state of a certain cell\n ");
                     break;
                 case "quit":
                     gameRun = false;
                     break;
-                case "runU":
+                case "runu":
                     System.out.println("Please type how many times you want the game to run");
                     int runAmountTimes = UI.nextInt();
                     // runs the makeNewGrid method the amount of times dectated by the user. 
@@ -74,7 +75,7 @@ public class GameOfLife
                     }
                     System.out.println("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"changeCell\" to change the state of a certain cell\n ");
                     break;
-                case "changeCell": // this intakes the the X and Y coordinate and makes the cell the opposite state that it currently is. 
+                case "changecell": // this intakes the the X and Y coordinate and makes the cell the opposite state that it currently is. 
                     System.out.println("to change cell you will need to type the x,y coodernate in this order to change the cell");
                     System.out.println("make sure the X coodinate is between 0 and "+(row -1)+" and the Y coodinate is between 0 and "+(col -1));
                     printArray(oldGen);
