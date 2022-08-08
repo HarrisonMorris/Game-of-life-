@@ -111,8 +111,8 @@ public class GameOfLife
         boolean [][] newGen = new boolean[oldGen.length][oldGen[0].length];
         int trueCellNeighbours;
         // sets newGen grid to all false 
-        for (int printCol = 0; printCol < oldGen[0].length; printCol++){
-            for (int printRow = 0; printRow < oldGen.length; printRow++){
+        for (int printCol = 0; printCol < oldGen.length; printCol++){
+            for (int printRow = 0; printRow < oldGen[0].length; printRow++){
                 newGen [printCol][printRow] = false;  
             }
         }
