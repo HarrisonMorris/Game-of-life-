@@ -76,16 +76,18 @@ public class GameOfLife
                     System.out.println("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"changeCell\" to change the state of a certain cell\n ");
                     break;
                 case "changecell": // this intakes the the X and Y coordinate and makes the cell the opposite state that it currently is. 
-                    System.out.println("to change cell you will need to type the x,y coodernate in this order to change the cell");
+                    System.out.println("to change cell you will need to type the x,y coodernate in this ORDER and SEPERATLY to change the cell");
                     System.out.println("make sure the X coodinate is between 0 and "+(row -1)+" and the Y coodinate is between 0 and "+(col -1));
                     printArray(oldGen);
                     int cellCoordinateX = UI.nextInt();
-                    int cellCoordinateY = UI.nextInt();                 
-                    if (oldGen[cellCoordinateX][cellCoordinateY] == false){
+                    int cellCoordinateY = UI.nextInt(); 
+                    if (cellCoordinateX > row - 1 && cellCoordinateY > col - 1) {// this tests to see if the coordinate is within the proper boundaries
+                     System.out.println("Error your number X or Y coordinate wasnt within expected boundaries please try again");
+                    } else if (oldGen[cellCoordinateX][cellCoordinateY] == false){
                         oldGen[cellCoordinateX][cellCoordinateY] = true;
-                    } else {
+                    } else if (oldGen[cellCoordinateX][cellCoordinateY] == true)  {
                         oldGen[cellCoordinateX][cellCoordinateY] = false;
-                    }
+                    } 
                     printArray(oldGen);
                     System.out.println("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"changeCell\" to change the state of a certain cell\n ");
                     break;
