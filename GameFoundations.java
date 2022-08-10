@@ -8,6 +8,7 @@ import java.util.Scanner;
 import java.util.Random;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 public class GameOfLife
 {
     Scanner input = new Scanner (System.in);
@@ -24,8 +25,8 @@ public class GameOfLife
         int row = 20;
         int col = 30;
         boolean [][] oldGen = new boolean[row][col]; //this is the grid that is first displayed on the screen but after that it is the previous version of each new grid
-        System.out.println("If you want your starting board to be filled with random cells please type random.");
-        System.out.println("If you want your starting board to be filled with dead cells so you can create your own board please type blank");
+        printSlow("If you want your starting board to be filled with random cells please type random. \n");
+        printSlow("If you want your starting board to be filled with dead cells so you can create your own board please type blank\n");
 
         //these two loops fill the grid array. the first one fills the array with to make ll of them false/dead cels this gives a blank slate for the secound loop to fill the array in a random order with true/alive cells    
         switch (UI.nextLine().toLowerCase()){
@@ -53,43 +54,42 @@ public class GameOfLife
                 break;
         }
         printArray(oldGen);
-        System.out.println("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"changeCell\" to change the state of a certain cell\n ");
+        printSlow("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"changeCell\" to change the state of a certain cell\n ");
         while (gameRun == true){
             switch (UI.nextLine().toLowerCase()){//UI stand for user input
                 case "run":
-                    System.out.println("type \"run\" to advance one generation");
                     oldGen = makeNewGen(oldGen); // this makes a new generation by getting the old one and putting it through the rules of the game to make a grid.
                     printArray(oldGen);     
-                    System.out.println("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"change cell\" to change the state of a certain cell\n ");
+                    printSlow("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"change cell\" to change the state of a certain cell\n ");
                     break;
                 case "quit":
                     gameRun = false;
                     break;
                 case "runu":
-                    System.out.println("Please type how many times you want the game to run");
+                    printSlow("Please type how many times you want the game to run\n");
                     int runAmountTimes = UI.nextInt();
                     // runs the makeNewGrid method the amount of times dectated by the user. 
                     for (int checkRunAmountTimes = 0; checkRunAmountTimes < runAmountTimes; checkRunAmountTimes++){
                         oldGen = makeNewGen(oldGen);
                         printArray(oldGen);
                     }
-                    System.out.println("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"changeCell\" to change the state of a certain cell\n ");
+                    printSlow("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"changeCell\" to change the state of a certain cell\n");
                     break;
                 case "changecell": // this intakes the the X and Y coordinate and makes the cell the opposite state that it currently is. 
-                    System.out.println("to change cell you will need to type the x,y coodernate in this ORDER and SEPERATLY to change the cell");
-                    System.out.println("make sure the X coodinate is between 0 and "+(row -1)+" and the Y coodinate is between 0 and "+(col -1));
+                    printSlow("to change cell you will need to type the x,y coodernate in this ORDER and SEPERATLY to change the cell");
+                    printSlow(" make sure the X coodinate is between 0 and "+(row -1)+" and the Y coodinate is between 0 and "+(col -1)+"\n");
                     printArray(oldGen);
                     int cellCoordinateX = UI.nextInt();
                     int cellCoordinateY = UI.nextInt(); 
                     if (cellCoordinateX > row - 1 && cellCoordinateY > col - 1) {// this tests to see if the coordinate is within the proper boundaries
-                     System.out.println("Error your number X or Y coordinate wasnt within expected boundaries please try again");
+                     printSlow("Error your number X or Y coordinate wasnt within expected boundaries please try again/n");
                     } else if (oldGen[cellCoordinateX][cellCoordinateY] == false){
                         oldGen[cellCoordinateX][cellCoordinateY] = true;
                     } else if (oldGen[cellCoordinateX][cellCoordinateY] == true)  {
                         oldGen[cellCoordinateX][cellCoordinateY] = false;
                     } 
                     printArray(oldGen);
-                    System.out.println("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"changeCell\" to change the state of a certain cell\n ");
+                    printSlow("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"changeCell\" to change the state of a certain cell\n ");
                     break;
             }
         }
@@ -147,5 +147,15 @@ public class GameOfLife
             }
         }
         return newGen;
+    }
+    public static void printSlow(String output){ //this makes the output to the screen slower rather than instantanious
+        for(int i = 0; i < output.length(); i++){
+        char c = output.charAt(i);
+        System.out.print(c);
+        try{
+            TimeUnit.MILLISECONDS.sleep(20);
+        }
+        catch (Exception e) {}
+        }
     }
 }
