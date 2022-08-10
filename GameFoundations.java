@@ -19,6 +19,7 @@ public class GameOfLife
      */
     public GameOfLife()
     {
+        clearScreen();
         Scanner UI = new Scanner(System.in);
         int trueCellNeighbours; 
         boolean gameRun = true; //this tells the computer to loop the code within the while loop until said otherwise.    
@@ -58,14 +59,17 @@ public class GameOfLife
         while (gameRun == true){
             switch (UI.nextLine().toLowerCase()){//UI stand for user input
                 case "run":
+                    clearScreen();
                     oldGen = makeNewGen(oldGen); // this makes a new generation by getting the old one and putting it through the rules of the game to make a grid.
                     printArray(oldGen);     
                     printSlow("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"change cell\" to change the state of a certain cell\n ");
                     break;
                 case "quit":
+                    clearScreen();
                     gameRun = false;
                     break;
                 case "runu":
+                    clearScreen();
                     printSlow("Please type how many times you want the game to run\n");
                     int runAmountTimes = UI.nextInt();
                     // runs the makeNewGrid method the amount of times dectated by the user. 
@@ -76,13 +80,14 @@ public class GameOfLife
                     printSlow("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"changeCell\" to change the state of a certain cell\n");
                     break;
                 case "changecell": // this intakes the the X and Y coordinate and makes the cell the opposite state that it currently is. 
-                    printSlow("to change cell you will need to type the x,y coodernate in this ORDER and SEPERATLY to change the cell");
+                    clearScreen();
+                    printSlow("to change cell you will need to type the x,y coodernate \n in this ORDER and SEPERATLY to change the cell");
                     printSlow(" make sure the X coodinate is between 0 and "+(row -1)+" and the Y coodinate is between 0 and "+(col -1)+"\n");
                     printArray(oldGen);
                     int cellCoordinateX = UI.nextInt();
                     int cellCoordinateY = UI.nextInt(); 
                     if (cellCoordinateX > row - 1 && cellCoordinateY > col - 1) {// this tests to see if the coordinate is within the proper boundaries
-                     printSlow("Error your number X or Y coordinate wasnt within expected boundaries please try again/n");
+                        printSlow("Error your number X or Y coordinate wasnt within expected boundaries please try again/n");
                     } else if (oldGen[cellCoordinateX][cellCoordinateY] == false){
                         oldGen[cellCoordinateX][cellCoordinateY] = true;
                     } else if (oldGen[cellCoordinateX][cellCoordinateY] == true)  {
@@ -148,14 +153,34 @@ public class GameOfLife
         }
         return newGen;
     }
-    public static void printSlow(String output){ //this makes the output to the screen slower rather than instantanious
+
+    public static void printSlow(String output){ //this makes the output to the screen present slower rather than instantanious
         for(int i = 0; i < output.length(); i++){
-        char c = output.charAt(i);
-        System.out.print(c);
-        try{
-            TimeUnit.MILLISECONDS.sleep(20);
-        }
-        catch (Exception e) {}
+            char printLetter = output.charAt(i);
+            System.out.print(printLetter);
+            try{
+                TimeUnit.MILLISECONDS.sleep(20);
+            }
+            catch (Exception e) {}
         }
     }
+
+    public static void clearScreen(){
+
+        //Clears Screen
+
+        try {
+
+            if (System.getProperty("os.name").contains("Windows"))
+
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+
+            else
+
+                Runtime.getRuntime().exec("clear");
+
+        } catch (IOException | InterruptedException ex) {}
+
+    }
+
 }
