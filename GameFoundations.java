@@ -1,15 +1,18 @@
 /**
- * Write a description of class GameFoundations here.
- *
+ * Write a description of class gameOfLife here.
+ * Conways game of life is a game where you make a 2d grid and within this grid you have cells. These cells have two states either dead or alive if the cells are dead they will do nothing but if the cell is alive they have a set of rules which they follow
+ * which allows them to either infect other cells so they become alive or become a dead cell. 
+ * The reason I choose this game to develope is because I wanted to make a game that would test my current skills but also develope other skills like managing problems
+ * and figuring out new code that I havent come across. it would also develope my skills at reaseraching into errors in my code.
  * @author (Harrison Morris)
- * @version (v6)
+ * @version (v4.3)
  */
 import java.util.Scanner;
 import java.util.Random;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-public class GameOfLife
+public class gameOfLife
 {
     Scanner input = new Scanner (System.in);
     // This scanner will allow me to take in the users input from the keyboard 
@@ -17,7 +20,7 @@ public class GameOfLife
     /**
      * Constructor for objects of class GameFoundations
      */
-    public GameOfLife()
+    public gameOfLife()
     {
         clearScreen();
         Scanner UI = new Scanner(System.in);
@@ -55,7 +58,7 @@ public class GameOfLife
                 break;
         }
         printArray(oldGen);
-        printSlow("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"changeCell\" to change the state of a certain cell\n ");
+        printSlow("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"change cell\" to change the state of a certain cell\n ");
         while (gameRun == true){
             switch (UI.nextLine().toLowerCase()){//UI stand for user input
                 case "run":
@@ -74,10 +77,15 @@ public class GameOfLife
                     int runAmountTimes = UI.nextInt();
                     // runs the makeNewGrid method the amount of times dectated by the user. 
                     for (int checkRunAmountTimes = 0; checkRunAmountTimes < runAmountTimes; checkRunAmountTimes++){
+                        clearScreen();
                         oldGen = makeNewGen(oldGen);
                         printArray(oldGen);
+                        try{//gives the function a certain amount of time before repeating
+                            TimeUnit.MILLISECONDS.sleep(125);
+                        }
+                        catch (Exception e) {}
                     }
-                    printSlow("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"changeCell\" to change the state of a certain cell\n");
+                    printSlow("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"change cell\" to change the state of a certain cell\n ");
                     break;
                 case "changecell": // this intakes the the X and Y coordinate and makes the cell the opposite state that it currently is. 
                     clearScreen();
@@ -86,8 +94,8 @@ public class GameOfLife
                     printArray(oldGen);
                     int cellCoordinateX = UI.nextInt();
                     int cellCoordinateY = UI.nextInt(); 
-                    if (cellCoordinateX > row - 1 && cellCoordinateY > col - 1) {// this tests to see if the coordinate is within the proper boundaries
-                        printSlow("Error your number X or Y coordinate wasnt within expected boundaries please try again/n");
+                    if (cellCoordinateX > row - 1 || cellCoordinateY > col - 1 || cellCoordinateX < 0 ||cellCoordinateY < 0 ) {// this tests to see if the coordinate is within the proper boundaries
+                        printSlow("Error your number X or Y coordinate wasnt within expected boundaries please try again "+"\n");
                     } else if (oldGen[cellCoordinateX][cellCoordinateY] == false){
                         oldGen[cellCoordinateX][cellCoordinateY] = true;
                     } else if (oldGen[cellCoordinateX][cellCoordinateY] == true)  {
@@ -158,16 +166,16 @@ public class GameOfLife
         for(int i = 0; i < output.length(); i++){
             char printLetter = output.charAt(i);
             System.out.print(printLetter);
-            try{
-                TimeUnit.MILLISECONDS.sleep(20);
+            try{//gives the function a certain amount of time before repeating
+             TimeUnit.MILLISECONDS.sleep(10);
             }
             catch (Exception e) {}
         }
     }
 
-    public static void clearScreen(){
+    public static void clearScreen(){// I have got this code from stack overflow
 
-        //Clears Screen
+        //Clears current Screen
 
         try {
 
