@@ -1,11 +1,11 @@
 /**
- * Write a description of class gameOfLife here.
  * Conways game of life is a game where you make a 2d grid and within this grid you have cells. These cells have two states either dead or alive if the cells are dead they will do nothing but if the cell is alive they have a set of rules which they follow
- * which allows them to either infect other cells so they become alive or become a dead cell. 
- * The reason I choose this game to develope is because I wanted to make a game that would test my current skills but also develope other skills like managing problems
+ * which allows them to either infect other cells so they become alive or become a dead cell.
+ * Game of life is an algorithim that creates intresting evolving shapes based of the games rules.  
+ * The reason I chose this game to develop is because I wanted to make a game that would test my current skills but also develope other skills like managing problems
  * and figuring out new code that I havent come across. it would also develope my skills at reaseraching into errors in my code.
  * @author (Harrison Morris)
- * @version (v4.3)
+ * @version (v4.4)
  */
 import java.util.Scanner;
 import java.util.Random;
@@ -14,65 +14,53 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 public class gameOfLife
 {
-    Scanner input = new Scanner (System.in);
     // This scanner will allow me to take in the users input from the keyboard 
+    Scanner input = new Scanner (System.in);
 
     /**
-     * Constructor for objects of class GameFoundations
+     * Constructor for objects of class gameOfLife
+     * In this method gameOfLife is used as the UI for the player and simulates conways game of life
      */
     public gameOfLife()
     {
         clearScreen();
         Scanner UI = new Scanner(System.in);
-        int trueCellNeighbours; 
         boolean gameRun = true; //this tells the computer to loop the code within the while loop until said otherwise.    
         int row = 20;
         int col = 30;
-        boolean [][] oldGen = new boolean[row][col]; //this is the grid that is first displayed on the screen but after that it is the previous version of each new grid
+        boolean [][] oldGen = new boolean[row][col]; //this stores the previous generations of conways game of life
         printSlow("If you want your starting board to be filled with random cells please type random. \n");
-        printSlow("If you want your starting board to be filled with dead cells so you can create your own board please type blank\n");
+        printSlow("If you want your starting board to be filled with dead cells so you can create your own board please type anything else\n");
 
         //these two loops fill the grid array. the first one fills the array with to make ll of them false/dead cels this gives a blank slate for the secound loop to fill the array in a random order with true/alive cells    
-        switch (UI.nextLine().toLowerCase()){
-            case "random":
-                for (int printCol = 0; printCol < oldGen[0].length; printCol++){  //grid.length and grid[0].length are the row and col variables of the grid array
-                    for (int printRow = 0; printRow < oldGen.length; printRow++){
-                        oldGen [printRow][printCol] = false;  
-                    }
-                }
-                for (int printCol = 0; printCol < oldGen[0].length; printCol++){ 
-                    for (int printRow = 0; printRow < oldGen.length; printRow++){
-                        //Math.random randomly generates numbers within the range of 0 to 1 and this determines how frequently alive/true cells occur .
-                        if (Math.random() > 0.75){ 
-                            oldGen[printRow][printCol] = true;
-                        }
-                    }
-                }  
-                break;
-            case "blank"://This will make the grid entierly false giving the user the ability to make their own shapes
-                for (int printCol = 0; printCol < oldGen[0].length; printCol++){  //grid.length and grid[0].length are the row and col variables of the grid array
-                    for (int printRow = 0; printRow < oldGen.length; printRow++){
-                        oldGen [printRow][printCol] = false;  
-                    }
-                }
-                break;
+        for (int printCol = 0; printCol < oldGen[0].length; printCol++){  //grid.length and grid[0].length are the row and col variables of the grid array
+            for (int printRow = 0; printRow < oldGen.length; printRow++){
+                oldGen [printRow][printCol] = false;  
+            }
         }
-        printArray(oldGen);
-        printSlow("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"change cell\" to change the state of a certain cell\n ");
-        while (gameRun == true){
-            switch (UI.nextLine().toLowerCase()){//UI stand for user input
+        if(UI.nextLine().toLowerCase().equals("random")){
+            for (int printCol = 0; printCol < oldGen[0].length; printCol++){ 
+                for (int printRow = 0; printRow < oldGen.length; printRow++){
+                    //Math.random randomly generates numbers within the range of 0 to 1 and this determines how frequently alive/true cells occur .
+                    if (Math.random() > 0.75){ 
+                        oldGen[printRow][printCol] = true;
+                    }
+                }
+            }  
+        }
+        printArray(oldGen); // prints intial state of array to user
+        while (gameRun){
+            clearScreen();
+            printSlow("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"change cell\" to change the state of a certain cell\n ");
+            switch (UI.nextLine().toLowerCase()){//UI stands for user input
                 case "run":
-                    clearScreen();
                     oldGen = makeNewGen(oldGen); // this makes a new generation by getting the old one and putting it through the rules of the game to make a grid.
                     printArray(oldGen);     
-                    printSlow("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"change cell\" to change the state of a certain cell\n ");
                     break;
                 case "quit":
-                    clearScreen();
                     gameRun = false;
                     break;
                 case "runu":
-                    clearScreen();
                     printSlow("Please type how many times you want the game to run\n");
                     int runAmountTimes = UI.nextInt();
                     // runs the makeNewGrid method the amount of times dectated by the user. 
@@ -83,12 +71,12 @@ public class gameOfLife
                         try{//gives the function a certain amount of time before repeating
                             TimeUnit.MILLISECONDS.sleep(125);
                         }
-                        catch (Exception e) {}
+                        catch (Exception e) {
+                            System.out.println("runU error");
+                        }
                     }
-                    printSlow("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"change cell\" to change the state of a certain cell\n ");
                     break;
                 case "changecell": // this intakes the the X and Y coordinate and makes the cell the opposite state that it currently is. 
-                    clearScreen();
                     printSlow("to change cell you will need to type the x,y coodernate \n in this ORDER and SEPERATLY to change the cell");
                     printSlow(" make sure the X coodinate is between 0 and "+(row -1)+" and the Y coodinate is between 0 and "+(col -1)+"\n");
                     printArray(oldGen);
@@ -102,12 +90,16 @@ public class gameOfLife
                         oldGen[cellCoordinateX][cellCoordinateY] = false;
                     } 
                     printArray(oldGen);
-                    printSlow("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"changeCell\" to change the state of a certain cell\n ");
+                    break;
+                default: //gives the user a error message to tell them what they may have done wrong
+                    System.out.println("Error you may have either spelt the word incorrectly or \n put in a command that dosent exist please try again");
                     break;
             }
         }
     }
-    // this method prints out the current array
+    /**
+     * this method prints out the current array
+     */ 
     public void printArray (boolean [][] oldGen){
         //this checks each cell of the oldGen array and prints out cell depeneding on if its false(a space appears in cell) or true(a O apears in cell). 
         for (int printCol = 0; printCol < oldGen.length; printCol++){
@@ -120,9 +112,12 @@ public class gameOfLife
             }
             System.out.println();
         }
-        System.out.println("");
+        System.out.println();
     }
-    // this method makes the newGen array for the next grid
+    /**
+     * this method makes the newGen array for the next grid
+     * this method takes in a oldGen to use as the template for the newGen array 
+     */ 
     public boolean[][] makeNewGen (boolean [][] oldGen ){
         boolean [][] newGen = new boolean[oldGen.length][oldGen[0].length];
         int trueCellNeighbours;
@@ -162,21 +157,27 @@ public class gameOfLife
         return newGen;
     }
 
-    public static void printSlow(String output){ //this makes the output to the screen present slower rather than instantanious
+    /**
+     * this makes the output to the screen present slower rather than instantanious
+     */
+    public static void printSlow(String output){ 
         for(int i = 0; i < output.length(); i++){
             char printLetter = output.charAt(i);
             System.out.print(printLetter);
             try{//gives the function a certain amount of time before repeating
-             TimeUnit.MILLISECONDS.sleep(10);
+                TimeUnit.MILLISECONDS.sleep(10);
             }
-            catch (Exception e) {}
+            catch (Exception e) {
+                System.out.println("printSlow error");
+            }
         }
     }
-
-    public static void clearScreen(){// I have got this code from stack overflow
-
-        //Clears current Screen
-
+    /**
+     * I have got this code from stack overflow
+     * Clears current Screen
+     */
+    
+    public static void clearScreen(){
         try {
 
             if (System.getProperty("os.name").contains("Windows"))
