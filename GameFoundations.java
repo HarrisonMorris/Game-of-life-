@@ -5,7 +5,7 @@
  * The reason I chose this game to develop is because I wanted to make a game that would test my current skills but also develope other skills like managing problems
  * and figuring out new code that I havent come across. it would also develope my skills at reaseraching into errors in my code.
  * @author (Harrison Morris)
- * @version (v4.4)
+ * @version (v4.5)
  */
 import java.util.Scanner;
 import java.util.Random;
@@ -48,23 +48,25 @@ public class gameOfLife
                 }
             }  
         }
+        clearScreen();
         printArray(oldGen); // prints intial state of array to user
-        while (gameRun){
-            clearScreen();
+        while (gameRun){            
             printSlow("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"change cell\" to change the state of a certain cell\n ");
             switch (UI.nextLine().toLowerCase()){//UI stands for user input
                 case "run":
+                    clearScreen();
                     oldGen = makeNewGen(oldGen); // this makes a new generation by getting the old one and putting it through the rules of the game to make a grid.
-                    printArray(oldGen);     
+                    printArray(oldGen); 
                     break;
                 case "quit":
+                    clearScreen();
                     gameRun = false;
                     break;
                 case "runu":
+                    clearScreen();
                     printSlow("Please type how many times you want the game to run\n");
                     int runAmountTimes = UI.nextInt();
-                    // runs the makeNewGrid method the amount of times dectated by the user. 
-                    for (int checkRunAmountTimes = 0; checkRunAmountTimes < runAmountTimes; checkRunAmountTimes++){
+                    for (int checkRunAmountTimes = 0; checkRunAmountTimes < runAmountTimes; checkRunAmountTimes++){// runs the makeNewGrid method the amount of times dectated by the user. 
                         clearScreen();
                         oldGen = makeNewGen(oldGen);
                         printArray(oldGen);
@@ -77,6 +79,7 @@ public class gameOfLife
                     }
                     break;
                 case "changecell": // this intakes the the X and Y coordinate and makes the cell the opposite state that it currently is. 
+                    clearScreen();
                     printSlow("to change cell you will need to type the x,y coodernate \n in this ORDER and SEPERATLY to change the cell");
                     printSlow(" make sure the X coodinate is between 0 and "+(row -1)+" and the Y coodinate is between 0 and "+(col -1)+"\n");
                     printArray(oldGen);
@@ -134,8 +137,8 @@ public class gameOfLife
                 trueCellNeighbours = 0;
                 for (int cellCheckLeftRight = -1; cellCheckLeftRight < 2; cellCheckLeftRight ++){
                     for (int cellCheckUpDown = -1; cellCheckUpDown < 2; cellCheckUpDown ++){
-                        if ( (cellColumn + cellCheckUpDown > -1 && cellRow + cellCheckLeftRight > -1 && cellColumn + cellCheckUpDown <= oldGen[0].length - 1 && cellRow + cellCheckLeftRight <= oldGen.length - 1 && (cellCheckUpDown != 0 || cellCheckLeftRight != 0) )&&
-                        (oldGen [cellRow+cellCheckLeftRight][cellColumn+cellCheckUpDown] == true) ) {
+                        if ( (cellColumn + cellCheckUpDown > -1 && cellRow + cellCheckLeftRight > -1 && cellColumn + cellCheckUpDown <= oldGen[0].length - 1 && cellRow + cellCheckLeftRight <= oldGen.length - 1 && (cellCheckUpDown != 0 || cellCheckLeftRight != 0) 
+                        )&&(oldGen [cellRow+cellCheckLeftRight][cellColumn+cellCheckUpDown] == true) ) {
                             trueCellNeighbours++;
                         }
                     }
@@ -156,7 +159,6 @@ public class gameOfLife
         }
         return newGen;
     }
-
     /**
      * this makes the output to the screen present slower rather than instantanious
      */
@@ -174,9 +176,10 @@ public class gameOfLife
     }
     /**
      * I have got this code from stack overflow
+     * https://stackoverflow.com/questions/2979383/how-to-clear-the-console
      * Clears current Screen
+     * 
      */
-    
     public static void clearScreen(){
         try {
 
@@ -189,7 +192,6 @@ public class gameOfLife
                 Runtime.getRuntime().exec("clear");
 
         } catch (IOException | InterruptedException ex) {}
-
     }
 
 }
