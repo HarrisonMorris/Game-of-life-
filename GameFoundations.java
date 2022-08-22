@@ -5,7 +5,7 @@
  * The reason I chose this game to develop is because I wanted to make a game that would test my current skills but also develope other skills like managing problems
  * and figuring out new code that I havent come across. it would also develope my skills at reaseraching into errors in my code.
  * @author (Harrison Morris)
- * @version (v4.5)
+ * @version (v5.1)
  */
 import java.util.Scanner;
 import java.util.Random;
@@ -53,6 +53,9 @@ public class gameOfLife
         while (gameRun){            
             printSlow("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"change cell\" to change the state of a certain cell\n ");
             switch (UI.nextLine().toLowerCase()){//UI stands for user input
+                default: //gives the user a error message to tell them what they may have done wrong
+                    System.out.println("Error you may have either spelt the word incorrectly or \n put in a command that dosent exist please try again");
+                    break;
                 case "run":
                     clearScreen();
                     oldGen = makeNewGen(oldGen); // this makes a new generation by getting the old one and putting it through the rules of the game to make a grid.
@@ -94,10 +97,10 @@ public class gameOfLife
                     } 
                     printArray(oldGen);
                     break;
-                default: //gives the user a error message to tell them what they may have done wrong
-                    System.out.println("Error you may have either spelt the word incorrectly or \n put in a command that dosent exist please try again");
-                    break;
+                
             }
+            clearScreen();
+            printArray(oldGen);// this is a temporary solution in the runu function 
         }
     }
     /**
