@@ -5,7 +5,7 @@
  * The reason I chose this game to develop is because I wanted to make a game that would test my current skills but also develope other skills like managing problems
  * and figuring out new code that I havent come across. it would also develope my skills at reaseraching into errors in my code.
  * @author (Harrison Morris)
- * @version (v5.1)
+ * @version (v5.2)
  */
 import java.util.Scanner;
 import java.util.Random;
@@ -28,6 +28,10 @@ public class gameOfLife
         boolean gameRun = true; //this tells the computer to loop the code within the while loop until said otherwise.    
         int row = 20;
         int col = 30;
+        int cellCoordinateX;
+         int cellCoordinateY;
+         int runAmountTimes;
+         String runuInput;
         boolean [][] oldGen = new boolean[row][col]; //this stores the previous generations of conways game of life
         printSlow("If you want your starting board to be filled with random cells please type random. \n");
         printSlow("If you want your starting board to be filled with dead cells so you can create your own board please type anything else\n");
@@ -50,25 +54,33 @@ public class gameOfLife
         }
         clearScreen();
         printArray(oldGen); // prints intial state of array to user
+        printSlow("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"change cell\" to change the state of a certain cell\n ");
         while (gameRun){            
-            printSlow("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"change cell\" to change the state of a certain cell\n ");
             switch (UI.nextLine().toLowerCase()){//UI stands for user input
-                default: //gives the user a error message to tell them what they may have done wrong
-                    System.out.println("Error you may have either spelt the word incorrectly or \n put in a command that dosent exist please try again");
-                    break;
-                case "run":
+                case "run"://runs a singular generation
                     clearScreen();
                     oldGen = makeNewGen(oldGen); // this makes a new generation by getting the old one and putting it through the rules of the game to make a grid.
                     printArray(oldGen); 
                     break;
-                case "quit":
+                case "quit":// stops the game
                     clearScreen();
                     gameRun = false;
                     break;
-                case "runu":
+                case "runu":// runs a number of generations from the user
                     clearScreen();
                     printSlow("Please type how many times you want the game to run\n");
-                    int runAmountTimes = UI.nextInt();
+                    runuInput = UI.nextLine();
+                    try {
+                        runAmountTimes = Integer.parseInt(runuInput);
+                    } catch(Exception e){
+                     System.out.println("error you passed through a invalid number please try again");
+                     break;
+                    }
+                    UI.nextLine(); // takes in rest of the line from the input.
+                    if(runAmountTimes <= 0){
+                    System.out.println("error you have put in an invalid input please try again");
+                    break;
+                    }
                     for (int checkRunAmountTimes = 0; checkRunAmountTimes < runAmountTimes; checkRunAmountTimes++){// runs the makeNewGrid method the amount of times dectated by the user. 
                         clearScreen();
                         oldGen = makeNewGen(oldGen);
@@ -81,14 +93,25 @@ public class gameOfLife
                         }
                     }
                     break;
-                case "changecell": // this intakes the the X and Y coordinate and makes the cell the opposite state that it currently is. 
+                case "change cell": // this intakes the the X and Y coordinate and makes the cell the opposite state that it currently is. 
                     clearScreen();
                     printSlow("to change cell you will need to type the x,y coodernate \n in this ORDER and SEPERATLY to change the cell");
-                    printSlow(" make sure the X coodinate is between 0 and "+(row -1)+" and the Y coodinate is between 0 and "+(col -1)+"\n");
+                    printSlow("make sure the X coodinate is from 0 to "+(row -1)+" and the Y coodinate is from 0 to "+(col -1)+"\n");
                     printArray(oldGen);
-                    int cellCoordinateX = UI.nextInt();
-                    int cellCoordinateY = UI.nextInt(); 
-                    if (cellCoordinateX > row - 1 || cellCoordinateY > col - 1 || cellCoordinateX < 0 ||cellCoordinateY < 0 ) {// this tests to see if the coordinate is within the proper boundaries
+                    try {
+                    cellCoordinateX = UI.nextInt();
+                    UI.nextLine();
+                    cellCoordinateY = UI.nextInt();
+                    UI.nextLine();
+                } catch(Exception e){
+                 System.out.println("Error you put an invalid input please try again");
+                 UI.nextLine();
+                 break;
+                }
+                
+                    // this tests to see if the coordinate is within the proper boundaries
+                    
+                    if (cellCoordinateX > row - 1 || cellCoordinateY > col - 1 || cellCoordinateX < 0 ||cellCoordinateY < 0 ) {
                         printSlow("Error your number X or Y coordinate wasnt within expected boundaries please try again "+"\n");
                     } else if (oldGen[cellCoordinateX][cellCoordinateY] == false){
                         oldGen[cellCoordinateX][cellCoordinateY] = true;
@@ -97,10 +120,11 @@ public class gameOfLife
                     } 
                     printArray(oldGen);
                     break;
-                
+                default: //gives the user a error message to tell them what they may have done wrong
+                    System.out.println("Error you may have either spelt the word incorrectly or \n put in a command that dosent exist please try again");
+                    break;
             }
-            clearScreen();
-            printArray(oldGen);// this is a temporary solution in the runu function 
+            printSlow("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"change cell\" to change the state of a certain cell\n ");
         }
     }
     /**
@@ -111,9 +135,9 @@ public class gameOfLife
         for (int printCol = 0; printCol < oldGen.length; printCol++){
             for (int printRow = 0; printRow < oldGen[0].length; printRow++){
                 if(oldGen [printCol][printRow] == true){
-                    System.out.print("O,");
+                    System.out.print("O ");
                 }  else if(oldGen [printCol][printRow] == false){
-                    System.out.print(" ,");
+                    System.out.print("_ ");
                 }
             }
             System.out.println();
