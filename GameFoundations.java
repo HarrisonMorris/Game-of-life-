@@ -52,7 +52,7 @@ public class gameOfLife
                 }
             }  
         }
-        clearScreen();
+        clearScreen();// clears current screen
         printArray(oldGen); // prints intial state of array to user
         printSlow("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"change cell\" to change the state of a certain cell\n ");
         while (gameRun){            
@@ -68,15 +68,17 @@ public class gameOfLife
                     break;
                 case "runu":// runs a number of generations from the user
                     clearScreen();
-                    printSlow("Please type how many times you want the game to run\n");
+                    printSlow("Please type how many times you want the game to run\n NOTE: please don't type until the generations have stopped running.\n");
                     runuInput = UI.nextLine();
-                    try {
+                    
+                    try {//This makes sure that the number put in isnt a decimal or letter 
+                        UI.nextLine(); // takes in rest of the line from the input.
                         runAmountTimes = Integer.parseInt(runuInput);
                     } catch(Exception e){
                      System.out.println("error you passed through a invalid number please try again");
                      break;
                     }
-                    UI.nextLine(); // takes in rest of the line from the input.
+                    
                     if(runAmountTimes <= 0){
                     System.out.println("error you have put in an invalid input please try again");
                     break;
@@ -95,10 +97,10 @@ public class gameOfLife
                     break;
                 case "change cell": // this intakes the the X and Y coordinate and makes the cell the opposite state that it currently is. 
                     clearScreen();
-                    printSlow("to change cell you will need to type the x,y coodernate \n in this ORDER and SEPERATLY to change the cell");
-                    printSlow("make sure the X coodinate is from 0 to "+(row -1)+" and the Y coodinate is from 0 to "+(col -1)+"\n");
+                    printSlow("to change cell you will need to type the y,x coodernate \n in this ORDER and SEPERATLY to change the cell");
+                    printSlow("make sure the Y coodinate is from 0 to "+(row -1)+" and the X coodinate is from 0 to "+(col -1)+"\n");
                     printArray(oldGen);
-                    try {
+                    try { //This is to make sure that the user types in the correct numbers and not decimals and letters. 
                     cellCoordinateX = UI.nextInt();
                     UI.nextLine();
                     cellCoordinateY = UI.nextInt();
@@ -171,15 +173,15 @@ public class gameOfLife
                     }
                 }
                 // these are the rules of conways game of life 
-                if (trueCellNeighbours >= 4){
+                if (trueCellNeighbours >= 4){ // if there are 4 or more true cell neighbours make cell false 
                     newGen[cellRow][cellColumn] = false;
-                }else if (trueCellNeighbours  <= 1){
+                }else if (trueCellNeighbours  <= 1){ // if there is 1 or less true cell neighbours make cell false 
                     newGen[cellRow][cellColumn] = false;
-                }else if (trueCellNeighbours == 2 && oldGen[cellRow][cellColumn] == true){
+                }else if (trueCellNeighbours == 2 && oldGen[cellRow][cellColumn] == true){ // if there is 2 true cell neighbours  and the cell that is currently selected is true make cell true 
                     newGen[cellRow][cellColumn] = true;
-                }else if(trueCellNeighbours == 3){
+                }else if(trueCellNeighbours == 3){ // if there is 3 true cell neighboursmake cell true 
                     newGen[cellRow][cellColumn] = true; 
-                }else{
+                }else{  //otherwise make false
                     newGen[cellRow][cellColumn] = false;
                 }
             }
@@ -194,7 +196,7 @@ public class gameOfLife
             char printLetter = output.charAt(i);
             System.out.print(printLetter);
             try{//gives the function a certain amount of time before repeating
-                TimeUnit.MILLISECONDS.sleep(10);
+                TimeUnit.MILLISECONDS.sleep(5);
             }
             catch (Exception e) {
                 System.out.println("printSlow error");
