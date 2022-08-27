@@ -29,12 +29,13 @@ public class gameOfLife
         int row = 20;
         int col = 30;
         int cellCoordinateX;
-         int cellCoordinateY;
-         int runAmountTimes;
-         String runuInput;
+        int cellCoordinateY;
+        int runAmountTimes;
+        String runuInput;
         boolean [][] oldGen = new boolean[row][col]; //this stores the previous generations of conways game of life
         printSlow("If you want your starting board to be filled with random cells please type random. \n");
         printSlow("If you want your starting board to be filled with dead cells so you can create your own board please type anything else\n");
+        printSlow("O is an alive cell and _ is a dead cell \n");
 
         //these two loops fill the grid array. the first one fills the array with to make ll of them false/dead cels this gives a blank slate for the secound loop to fill the array in a random order with true/alive cells    
         for (int printCol = 0; printCol < oldGen[0].length; printCol++){  //grid.length and grid[0].length are the row and col variables of the grid array
@@ -54,7 +55,7 @@ public class gameOfLife
         }
         clearScreen();// clears current screen
         printArray(oldGen); // prints intial state of array to user
-        printSlow("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"change cell\" to change the state of a certain cell\n ");
+        instructions();
         while (gameRun){            
             switch (UI.nextLine().toLowerCase()){//UI stands for user input
                 case "run"://runs a singular generation
@@ -70,18 +71,17 @@ public class gameOfLife
                     clearScreen();
                     printSlow("Please type how many times you want the game to run\n NOTE: please don't type until the generations have stopped running.\n");
                     runuInput = UI.nextLine();
-                    
+
                     try {//This makes sure that the number put in isnt a decimal or letter 
-                        UI.nextLine(); // takes in rest of the line from the input.
                         runAmountTimes = Integer.parseInt(runuInput);
                     } catch(Exception e){
-                     System.out.println("error you passed through a invalid number please try again");
-                     break;
+                        System.out.println("error you passed through a invalid number please try again");
+                        break;
                     }
-                    
+
                     if(runAmountTimes <= 0){
-                    System.out.println("error you have put in an invalid input please try again");
-                    break;
+                        System.out.println("error you have put in an invalid input please try again");
+                        break;
                     }
                     for (int checkRunAmountTimes = 0; checkRunAmountTimes < runAmountTimes; checkRunAmountTimes++){// runs the makeNewGrid method the amount of times dectated by the user. 
                         clearScreen();
@@ -97,22 +97,22 @@ public class gameOfLife
                     break;
                 case "change cell": // this intakes the the X and Y coordinate and makes the cell the opposite state that it currently is. 
                     clearScreen();
-                    printSlow("to change cell you will need to type the y,x coodernate \n in this ORDER and SEPERATLY to change the cell");
+                    printSlow("to change cell you will need to type the y,x coodernate \n in this ORDER and ON SEPARATE LINES to change the cell");
                     printSlow("make sure the Y coodinate is from 0 to "+(row -1)+" and the X coodinate is from 0 to "+(col -1)+"\n");
                     printArray(oldGen);
                     try { //This is to make sure that the user types in the correct numbers and not decimals and letters. 
-                    cellCoordinateX = UI.nextInt();
-                    UI.nextLine();
-                    cellCoordinateY = UI.nextInt();
-                    UI.nextLine();
-                } catch(Exception e){
-                 System.out.println("Error you put an invalid input please try again");
-                 UI.nextLine();
-                 break;
-                }
-                
+                        cellCoordinateX = UI.nextInt();
+                        UI.nextLine();
+                        cellCoordinateY = UI.nextInt();
+                        UI.nextLine();
+                    } catch(Exception e){
+                        System.out.println("Error you put an invalid input please try again");
+                        UI.nextLine();
+                        break;
+                    }
+
                     // this tests to see if the coordinate is within the proper boundaries
-                    
+
                     if (cellCoordinateX > row - 1 || cellCoordinateY > col - 1 || cellCoordinateX < 0 ||cellCoordinateY < 0 ) {
                         printSlow("Error your number X or Y coordinate wasnt within expected boundaries please try again "+"\n");
                     } else if (oldGen[cellCoordinateX][cellCoordinateY] == false){
@@ -126,9 +126,11 @@ public class gameOfLife
                     System.out.println("Error you may have either spelt the word incorrectly or \n put in a command that dosent exist please try again");
                     break;
             }
-            printSlow("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"change cell\" to change the state of a certain cell\n ");
+            instructions();    
+
         }
     }
+
     /**
      * this method prints out the current array
      */ 
@@ -146,6 +148,7 @@ public class gameOfLife
         }
         System.out.println();
     }
+
     /**
      * this method makes the newGen array for the next grid
      * this method takes in a oldGen to use as the template for the newGen array 
@@ -188,6 +191,7 @@ public class gameOfLife
         }
         return newGen;
     }
+
     /**
      * this makes the output to the screen present slower rather than instantanious
      */
@@ -203,6 +207,7 @@ public class gameOfLife
             }
         }
     }
+
     /**
      * I have got this code from stack overflow
      * https://stackoverflow.com/questions/2979383/how-to-clear-the-console
@@ -221,6 +226,13 @@ public class gameOfLife
                 Runtime.getRuntime().exec("clear");
 
         } catch (IOException | InterruptedException ex) {}
+    }
+/**
+ * This function gives the instructions of the game to the user
+ */
+    public static void instructions(){
+        printSlow("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"change cell\" to change the state of a certain cell\n to quit please type quit \n ");
+
     }
 
 }
