@@ -5,7 +5,7 @@
  * The reason I chose this game to develop is because I wanted to make a game that would test my current skills but also develope other skills like managing problems
  * and figuring out new code that I havent come across. it would also develope my skills at reaseraching into errors in my code.
  * @author (Harrison Morris)
- * @version (v5.2)
+ * @version (v5.3)
  */
 import java.util.Scanner;
 import java.util.Random;
@@ -26,11 +26,11 @@ public class gameOfLife
         clearScreen();
         Scanner UI = new Scanner(System.in);
         boolean gameRun = true; //this tells the computer to loop the code within the while loop until said otherwise.    
-        int row = 20;
-        int col = 30;
+        int row = 20;// amount of rows in the grid
+        int col = 30;// amount of colloums in the grid
         int cellCoordinateX;
         int cellCoordinateY;
-        int runAmountTimes;
+        int runAmountTimes;// user input for amount of time they want the grid to run for
         String runuInput;
         boolean [][] oldGen = new boolean[row][col]; //this stores the previous generations of conways game of life
         printSlow("If you want your starting board to be filled with random cells please type random. \n");
@@ -55,7 +55,7 @@ public class gameOfLife
         }
         clearScreen();// clears current screen
         printArray(oldGen); // prints intial state of array to user
-        instructions();
+        instructions();// prints out instructions
         while (gameRun){            
             switch (UI.nextLine().toLowerCase()){//UI stands for user input
                 case "run"://runs a singular generation
@@ -79,12 +79,12 @@ public class gameOfLife
                         break;
                     }
 
-                    if(runAmountTimes <= 0){
+                    if(runAmountTimes <= 0){ // to check if the user put in a negative number or 0 
                         System.out.println("error you have put in an invalid input please try again");
                         break;
                     }
                     for (int checkRunAmountTimes = 0; checkRunAmountTimes < runAmountTimes; checkRunAmountTimes++){// runs the makeNewGrid method the amount of times dectated by the user. 
-                        clearScreen();
+                        clearScreen();// this is to make it look like the generations are running one after the other instead of one big group
                         oldGen = makeNewGen(oldGen);
                         printArray(oldGen);
                         try{//gives the function a certain amount of time before repeating
@@ -126,7 +126,7 @@ public class gameOfLife
                     System.out.println("Error you may have either spelt the word incorrectly or \n put in a command that dosent exist please try again");
                     break;
             }
-            instructions();    
+            instructions(); 
 
         }
     }
@@ -231,7 +231,7 @@ public class gameOfLife
  * This function gives the instructions of the game to the user
  */
     public static void instructions(){
-        printSlow("type \"run\" to advance one generation\n"+"please type \"runU\" to run specific number of generation\n "+"please type \"change cell\" to change the state of a certain cell\n to quit please type quit \n ");
+        printSlow("type \"run\" to advance one generation\n"+"please type \"runu\" to run specific number of generation\n "+"please type \"change cell\" to change the state of a certain cell\n to quit please type quit \n ");
 
     }
 
